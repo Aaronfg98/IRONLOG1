@@ -1,4 +1,4 @@
-const V = 'ironlog-v2';
+const V = 'ironlog-v3';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
