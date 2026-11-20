@@ -219,7 +219,7 @@ input.sin{text-align:left;font-size:17px;font-weight:600;padding:0 12px}
 (function(){
 'use strict';
 const WEEKS=12, DELOAD=[4,8,12], START=new Date('2026-11-16T00:00:00'), GOAL_KG=77;
-const REST={pb:150,se:180,pm:120,jn:120,jp:120,pi:120,fo:150,pr:120,pd:150,lr:90,rm:90,rp:90,cf:90,fp:60,el:60,sk:75,eo:75,sc:60,cm:60,ce:60,cp:60,ha:60,ta:60,yt:45,pl:45,hl:60,cc:60,pt:90,ap:75,pu:60};
+const REST={pb:150,se:180,pm:120,jn:120,jp:120,pi:120,fo:150,pr:120,pd:150,lr:90,rm:90,rp:90,cf:90,fp:60,el:60,sk:75,eo:75,sc:60,cm:60,ce:60,cp:60,ha:60,ta:60,yt:45,pl:45,hl:60,cc:60,pt:90,ap:75,pu:60,qe:75};
 const E=(id,name,equip,sets,min,max,kg,o)=>Object.assign({id,name,equip,sets,min,max,kg,step:2.5},o||{});
 const DAYS=[
  {k:'lun',n:'Lunes',t:'Upper A',ex:[
@@ -229,22 +229,19 @@ const DAYS=[
   E('jn','Jalón Neutro Agarre Cerrado','Polea alta',4,8,10,55),
   E('pm','Press Militar Barra','Barra',3,8,10,22.5,{note:'Técnica primero'}),
   E('el','Elevaciones Laterales Cable','Polea',4,12,15,null,{step:1,note:'Sube al siguiente peso respecto al bloque anterior'}),
-  E('sk','Skull Crusher MC 1 brazo','Mancuerna',3,10,12,10,{uni:1,step:1}),
-  E('eo','Extensión Overhead Polea 1 brazo','Polea alta',3,12,15,10,{uni:1,step:1,note:'Cabeza larga del tríceps'}),
-  E('sc','Spider Curl MC 1 brazo','Mancuerna + banco inclinado',3,10,12,5,{uni:1,step:1,note:'Pecho pegado al banco, RIR 3 al inicio'}),
-  E('cm','Curl Martillo MC','Mancuernas',3,10,12,12.5,{step:1}),
-  E('cc','Cable Crunch','Polea alta',3,12,15,null,{note:'Calibra el peso a RIR 3'})]},
+  E('eo','Extensión Overhead Polea 1 brazo','Polea alta',3,10,12,10,{uni:1,step:1,note:'Cabeza larga del tríceps. Peso exigente, no sobra nada'}),
+  E('cm','Curl Martillo MC','Mancuernas',3,10,12,12.5,{step:1})]},
  {k:'mar',n:'Martes',t:'Lower',ex:[
   E('se','Sentadilla Trasera','Barra',4,6,8,95),
   E('pd','PDR MC','Mancuernas',4,10,12,35),
   E('pr','Prensa Pie Alto y Ancho','Máquina',3,10,12,200,{step:5}),
   E('pt','Cable Pull Through','Polea baja',3,12,15,null,{note:'Calibra el peso a RIR 3'}),
   E('cf','Curl Femoral Tumbado MC','Mancuerna',3,10,12,37.5),
-  E('ta','Elevación de Talones en Pie','Máquina',3,15,20,110,{step:5}),
-  E('pl','Plancha RKC','Suelo',3,30,40,null,{nokg:1,unit:'s'})]},
+  E('ta','Elevación de Talones en Pie','Máquina',4,15,20,110,{step:5}),
+  E('pl','Plancha RKC','Suelo',3,30,40,null,{nokg:1,unit:'s'}),
+  E('cc','Cable Crunch','Polea alta',3,12,15,null,{note:'Calibra el peso a RIR 3'})]},
  {k:'jue',n:'Jueves',t:'Upper B',ex:[
-  E('fp','Face Pull con cuerda','Polea baja',3,15,20,27.5),
-  E('fo','Fondos Lastrados','Paralelas',3,8,12,90),
+  E('fo','Fondos Lastrados','Paralelas',3,8,12,90,{note:'Tu ejercicio de fuerza para el tríceps: primero y con técnica limpia'}),
   E('pi','Press Inclinado Barra 30°','Barra',4,8,10,25),
   E('ap','Aperturas MC','Mancuernas',3,10,12,null,{step:1,note:'Calibra el peso a RIR 3'}),
   E('rm','Remo MC Banco Inclinado 1 brazo','Mancuerna + banco',4,10,12,25,{uni:1,step:1}),
@@ -252,13 +249,13 @@ const DAYS=[
   E('jp','Jalón Prono Agarre Ancho','Polea alta',4,8,10,47.5),
   E('rp','Remo Polea Neutro','Polea baja',3,10,12,50)]},
  {k:'vie',n:'Viernes',t:'Brazos + escápula',ex:[
-  E('fp','Face Pull con cuerda','Polea baja',3,15,20,27.5),
-  E('eo','Extensión Overhead Polea 1 brazo','Polea alta',4,12,15,10,{uni:1,step:1,note:'Cabeza larga del tríceps'}),
+  E('eo','Extensión Overhead Polea 1 brazo','Polea alta',4,8,12,10,{uni:1,step:1,note:'Cabeza larga del tríceps. Primero, fresco'}),
+  E('sk','Skull Crusher MC 1 brazo','Mancuerna',3,8,12,10,{uni:1,step:1}),
   E('pu','Pushdown 1 brazo Agarre Supino','Polea alta',3,12,15,null,{uni:1,step:1,note:'Empieza hacia 15 kg a RIR 3'}),
+  E('sc','Spider Curl MC 1 brazo','Mancuerna + banco inclinado',3,10,12,5,{uni:1,step:1,note:'Pecho pegado al banco, RIR 3 al inicio'}),
   E('ce','Curl EZ','Barra Z',3,10,12,10),
-  E('cp','Curl Predicador EZ','Barra Z',3,10,12,12.5),
-  E('ha','Hip Abduction','Máquina',3,15,20,42.5),
-  E('ta','Elevación de Talones en Pie','Máquina',3,15,20,100,{step:5}),
+  E('fp','Face Pull con cuerda','Polea baja',3,15,20,27.5),
+  E('qe','Extensión de Cuádriceps','Máquina',3,12,15,null,{step:2.5,note:'Calibra el peso a RIR 3'}),
   E('hl','Hanging Leg Raise','Barra de dominadas',3,10,12,null,{nokg:1})]}
 ];
 const BODY_FIELDS=[['chest','Pecho (cm)'],['armR','Brazo relajado'],['armF','Brazo contraído'],['waist','Cintura'],['hip','Cadera'],['quad','Cuádriceps izq.'],['calf','Gemelo izq.']];
@@ -296,10 +293,10 @@ function topKg(sets){let m=null;sets.forEach(s=>{const k=num(s.k);if(k!=null&&(m
 function refFor(d,ex,w){for(let x=w-1;x>=1;x--){if(isDeload(x)||isSub(x,d,ex.id))continue;const f=doneSets(x,d,ex.id);if(f.length)return{week:x,sets:f}}return null}
 const TOPS=['pb','se','pi','jn'];
 const WUP=['pb','se','pi','pm'];
-const MUSC={'lun|fp':'Escápula','lun|pb':'Pecho','lun|lr':'Espalda','lun|jn':'Espalda','lun|pm':'Hombro','lun|el':'Hombro','lun|sk':'Tríceps','lun|eo':'Tríceps','lun|sc':'Bíceps','lun|cm':'Bíceps','lun|cc':'Core',
- 'mar|se':'Cuádriceps','mar|pd':'Isquios','mar|pr':'Cuádriceps','mar|pt':'Glúteo','mar|cf':'Isquios','mar|ta':'Gemelos','mar|pl':'Core',
- 'jue|fp':'Escápula','jue|fo':'Pecho','jue|pi':'Pecho','jue|ap':'Pecho','jue|rm':'Espalda','jue|el':'Hombro','jue|jp':'Espalda','jue|rp':'Espalda',
- 'vie|fp':'Escápula','vie|eo':'Tríceps','vie|pu':'Tríceps','vie|ce':'Bíceps','vie|cp':'Bíceps','vie|ha':'Glúteo','vie|ta':'Gemelos','vie|hl':'Core'};
+const MUSC={'lun|fp':'Escápula','lun|pb':'Pecho','lun|lr':'Espalda','lun|jn':'Espalda','lun|pm':'Hombro','lun|el':'Hombro','lun|eo':'Tríceps','lun|cm':'Bíceps',
+ 'mar|se':'Cuádriceps','mar|pd':'Isquios','mar|pr':'Cuádriceps','mar|pt':'Glúteo','mar|cf':'Isquios','mar|ta':'Gemelos','mar|pl':'Core','mar|cc':'Core',
+ 'jue|fo':'Pecho','jue|pi':'Pecho','jue|ap':'Pecho','jue|rm':'Espalda','jue|el':'Hombro','jue|jp':'Espalda','jue|rp':'Espalda',
+ 'vie|eo':'Tríceps','vie|sk':'Tríceps','vie|pu':'Tríceps','vie|sc':'Bíceps','vie|ce':'Bíceps','vie|fp':'Escápula','vie|qe':'Cuádriceps','vie|hl':'Core'};
 const MGROUPS=['Pecho','Espalda','Hombro','Escápula','Tríceps','Bíceps','Cuádriceps','Isquios','Glúteo','Gemelos','Core'];
 const topWeek=w=>(w>=5&&w<=7)||(w>=9&&w<=11);
 const hasTop=(w,ex)=>TOPS.indexOf(ex.id)>=0&&topWeek(w);
@@ -522,7 +519,7 @@ async function doExport(){
   try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();a.remove();toast('Copia guardada')}catch(e){copyText(txt,'Copia copiada como texto')}}
 function doImport(txt){
   try{const o=JSON.parse(txt);if(!o||o.app!=='ironlog'||!o.sessions)throw new Error('formato');
-    S.sessions=o.sessions||{};S.body=o.body||{};S.weights=o.weights||null;S.refm=o.refm||null;S.food=o.food||null;wInit();foodInit();save();render();toast('Datos restaurados')}catch(e){toast('No es una copia válida de IRONLOG')}}
+    S.sessions=o.sessions||{};S.body=o.body||{};S.weights=o.weights||null;S.refm=o.refm||null;S.food=o.food||null;S.meta.planv=0;wInit();foodInit();mercSeed();planMig();save();render();toast('Datos restaurados')}catch(e){toast('No es una copia válida de IRONLOG')}}
 
 document.addEventListener('click',ev=>{
   const t=ev.target.closest('button');if(!t)return;
@@ -807,6 +804,15 @@ function muscleCard(){
   '<p class="muted">Series directas del plan de la semana; los fondos cuentan en pecho. Calentamiento del fisio completo en '+wu+' de '+wt+' sesiones de tren superior empezadas esta semana.</p></div>'}
 
 /* ---------- inicio ---------- */
+
+function planMig(){
+  if(S.meta.planv>=2)return;
+  const mv={sk:'vie',sc:'vie',cc:'mar'};
+  Object.keys(S.sessions).slice().forEach(id=>{const o=S.sessions[id];if(!o||o.day!=='lun')return;
+    Object.keys(mv).forEach(eid=>{const r=o.ex&&o.ex[eid];if(!r)return;const tid=sid(o.week,mv[eid]);
+      if(!S.sessions[tid])S.sessions[tid]={week:o.week,day:mv[eid],date:o.date,ex:{}};
+      if(!S.sessions[tid].ex[eid]){S.sessions[tid].ex[eid]=r;delete o.ex[eid]}})});
+  S.meta.planv=2;save()}
 /* ---------- v8: sustituir ejercicio (máquina ocupada) ---------- */
 const ALTS={
  pb:[['Press banca con mancuernas','Mancuernas + banco'],['Press de pecho en máquina','Máquina'],['Flexiones lastradas','Suelo + disco'],['Press suelo con barra','Barra']],
@@ -837,6 +843,7 @@ const ALTS={
  ce:[['Curl barra recta','Barra'],['Curl alterno MC','Mancuernas'],['Curl en polea baja','Polea']],
  cp:[['Predicador MC 1 brazo','Mancuerna + banco'],['Curl en polea baja','Polea'],['Curl inclinado MC','Mancuernas + banco inclinado']],
  ha:[['Abducción en polea','Polea baja'],['Caminata lateral con goma','Goma'],['Abducción tumbado','Suelo']],
+ qe:[['Sentadilla búlgara MC','Mancuernas + banco'],['Prensa de piernas 1 pierna','Máquina'],['Sentadilla goblet','Mancuerna']],
  hl:[['Elevación de piernas en banco','Banco'],['Crunch en máquina','Máquina'],['Rueda abdominal','Rueda']]};
 const exN=(e,rec)=>rec&&rec.sub?rec.sub.n:e.name;
 const exQ=(e,rec)=>rec&&rec.sub?rec.sub.eq:e.equip;
@@ -1157,7 +1164,7 @@ document.addEventListener('input',ev=>{
   const t=ev.target;
   if(t.dataset.cmin){const s=getSess(S.week,S.day,true);s.cardio=s.cardio||{};const v=num(t.value);if(v==null||v<=0)delete s.cardio.min;else s.cardio.min=v;save()}});
 
-wInit();foodInit();mercSeed();render();wake();
+wInit();foodInit();mercSeed();planMig();render();wake();
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 })();
